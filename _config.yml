@@ -8,7 +8,7 @@ url: http://fivever.github.io
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organization's page leave it empty)
-baseurl: '/jekyll-clean-dark'
+baseurl: '/Fivever.github.io'
 
 author: Jason Xiong
 copyright: 2019-2021
