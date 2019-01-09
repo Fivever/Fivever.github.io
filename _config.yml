@@ -1,17 +1,17 @@
 # Jekyll configuration
 
-name: Blog Name
-description: Software Developer
+name: Fivever
+description: Fivever's personal blog
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: http://streetturtle.github.io
+url: http://fivever.github.io
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organization's page leave it empty)
 baseurl: '/jekyll-clean-dark'
 
-author: Pavel Makhov
-copyright: 2015-2018
+author: Jason Xiong
+copyright: 2019-2021
 
 share:
   facebook: true
@@ -22,7 +22,7 @@ share:
   email: true
 
 social:
-  github: streetturtle
+  github: Fivever
   stackoverflow: ''
   linkedin:
   instagram: ''
