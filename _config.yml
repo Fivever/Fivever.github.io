@@ -4,7 +4,7 @@ name: Fivever
 description: Fivever's personal blog
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: http://fivever.github.io
+url: https://fivever.github.io
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organization's page leave it empty)
