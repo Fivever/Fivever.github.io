@@ -1,6 +1,19 @@
 ---
 published: false
 ---
+---
+published: true
+layout: post
+title: Ubuntu1604 Basic Configuration
+tags:
+  - Data Structure
+description: 基于Ubuntu1604的基础开发配置
+toc: true
+share: true
+comments: true
+
+---
+
 ```
 cd /etc/apt
 sudo cp sources.list sources.list.bak
