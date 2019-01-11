@@ -1,0 +1,77 @@
+{
+    "body": "Inspired by http://donw.io/post/github-comments/.",
+    "created_at": "2017-04-27T03:12:41Z",
+    "html_url": "https://github.com/7anshuai/blog/issues/1#issuecomment-297599593",
+    "id": 297599593,
+    "issue_url": "https://api.github.com/repos/7anshuai/blog/issues/1",
+    "updated_at": "2017-04-27T03:12:41Z",
+    "url": "https://api.github.com/repos/7anshuai/blog/issues/comments/297599593",
+    "user": {
+        "avatar_url": "https://avatars0.githubusercontent.com/u/9865150?v=3",
+        "events_url": "https://api.github.com/users/7anshuai/events{/privacy}",
+        "followers_url": "https://api.github.com/users/7anshuai/followers",
+        "following_url": "https://api.github.com/users/7anshuai/following{/other_user}",
+        "gists_url": "https://api.github.com/users/7anshuai/gists{/gist_id}",
+        "gravatar_id": "",
+        "html_url": "https://github.com/7anshuai",
+        "id": 9865150,
+        "login": "7anshuai",
+        "organizations_url": "https://api.github.com/users/7anshuai/orgs",
+        "received_events_url": "https://api.github.com/users/7anshuai/received_events",
+        "repos_url": "https://api.github.com/users/7anshuai/repos",
+        "site_admin": false,
+        "starred_url": "https://api.github.com/users/7anshuai/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/7anshuai/subscriptions",
+        "type": "User",
+        "url": "https://api.github.com/users/7anshuai"
+    }
+}
+代码
+我的博客使用 Nico 来生成静态文件。不管你使用什么静态文件生成器，都只需给使用的主题添加一个简单的 comments.html，我的看起来是这样:
+
+<div class="gh-comments" data-comment-id="{{post.gh_issue_id}}" data-title="{{ post.title }}"></div>
+<script type="text/javascript">
+  (function (){
+    if (!'{{post.gh_issue_id}}') return false;
+    var gh_comments = document.getElementsByClassName('gh-comments')[0];
+    var a = document.createElement('a');
+    a.href = '{{config.github_issues}}';
+    var gh_api = 'https://api.github.com/repos' + a.pathname;
+    var gh_issue_id = '{{post.gh_issue_id}}';
+    var gh_issue_url = a.href +  '/' + gh_issue_id;
+    var gh_comments_url = gh_api + '/' + gh_issue_id + '/comments';
+    fetch(gh_comments_url, {
+      headers: new Headers({
+        'Accept': 'application/vnd.github.v3.html+json',
+        'Content-Type': 'application/json'
+      }),
+      method: 'GET'
+    }).then((res) => {
+      if (res.status == 200) return res.json();
+      let error = new Error('HTTP Exception[GET]');
+      error.status = res.status;
+      error.statusText = res.statusText;
+      error.url = res.url;
+      throw error;
+    }).then((json) => {
+        gh_comments.insertAdjacentHTML('afterbegin', `<h3>GitHub Comments</h3>
+          <p>Visit the <a href="${gh_issue_url}">GitHub Issue</a> to comment on this post.</p>`);
+
+        for (let comment of json) {
+          let date = new Date(comment.created_at);
+          let c = '<div class="gh-comment">' +
+              `<img src="${comment.user.avatar_url}" width="24px"> ` +
+              `<a href="${comment.user.html_url}">${comment.user.login}</a>` +
+              ' posted at ' +
+              `<time>${date.toUTCString()}</time>` +
+              '<hr>' +
+              comment.body_html +
+              '</div>';
+          gh_comments.insertAdjacentHTML('beforeend', c);
+        }
+    }).catch((err) => {
+      gh_comments.insertAdjacentHTML('afterbegin', `<h3>GitHub Comments</h3>
+        <p>Comments are not open for this post yet</p>`);
+    });
+  })();
+</script>
