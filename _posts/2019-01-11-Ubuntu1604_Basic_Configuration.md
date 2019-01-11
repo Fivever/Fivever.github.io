@@ -1,7 +1,4 @@
 ---
-published: false
----
----
 published: true
 layout: post
 title: Ubuntu1604 Basic Configuration
