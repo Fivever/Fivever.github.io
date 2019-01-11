@@ -8,14 +8,19 @@ description: 基于Ubuntu1604的基础开发配置
 toc: true
 share: true
 comments: true
-
 ---
 ### 更改系统软件下载源
+
+通过更改下载源，可以更快的进行系统软件以及补丁的更新
+
+- 在terminal中输入一下命令行
 ```
 cd /etc/apt
 sudo cp sources.list sources.list.bak
 sudo gedit sources.list
-
+```
+- 在打开的list文件中，用以下替代文件的内容
+```
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates main restricted
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial universe
@@ -41,11 +46,16 @@ sudo apt-get remove gnome-mines cheese transmission-common gnome-orca webbrowser
 sudo apt-get remove onboard deja-dup 
 ```
 ### 安装vim
+
+先卸载ubuntu系统自带的vim，再安装
 ```
 sudo apt-get remove vim-common
 sudo apt-get install vim
 ```
 ### 安装miniconda3
+- 从miniconda官网下载<https://conda.io/miniconda.html>，下载文件保存至Downloads文件夹
+
+这里不用anaconda是因为此包太大，并且之后使用conda安装和管理python包十分方便
 ```
 cd Downloads
 bash Miniconda3-latest-Linux-x86_64.sh
@@ -64,6 +74,11 @@ sudo apt-get install oracle-java8-installer
 sudo apt install oracle-java8-set-default
 ```
 ### 更改下载源并安装pytorch
+- 直接在terminal中操作，下载并安装pytorch安装包
+```
+conda install pytorch-cpu torchvision-cpu -c pytorch
+```
+- 如果迟迟下载不下来，可参考更换下载源
 ```
 conda config --prepend channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 conda install pytorch-cpu torchvision-cpu -c pytorch
