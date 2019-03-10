@@ -1,7 +1,4 @@
 ---
-published: false
----
----
 published: true
 layout: post
 title: CS:APP3e（Data Lab)
