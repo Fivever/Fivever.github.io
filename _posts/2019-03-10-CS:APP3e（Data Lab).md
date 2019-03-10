@@ -102,6 +102,24 @@ int bitCount(int x) {
 }
 ```
 
+### bang
+
+问题：不用非运算符实现非运算符
+
+补码中0的二进制数为全0，所以只需比较x和-x中是否存在符号位为1，若存在符号位为1则补码不为0，返回0，否则返回1
+
+```cpp
+/* 
+ * bang - Compute !x without using !
+ *   Examples: bang(3) = 0, bang(0) = 1
+ *   Legal ops: ~ & ^ | + << >>
+ *   Max ops: 12
+ *   Rating: 4 
+ */
+int bang(int x) {
+  return ((~(x|(~x+1)))>>31)&1;
+}
+```
 
 ### tmin
 
