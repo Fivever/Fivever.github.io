@@ -54,3 +54,24 @@ int getByte(int x, int n) {
   return (x>>(n<<3))&0xff;
 }
 ```
+
+### logicalShift
+
+问题：将x逻辑右移n位
+
+无符号数的右移运算是逻辑右移，高位都用0填充，有符号数的右移运算是算术右移,高位用符号位填充。所以答案应该是在原二进制数右移n位的基础上，只保留低(32-n)位，也就是与(1<<(32-n)+~(1<<(32-n))-1)得到的，低(32-n)均为1，高位均为0的二进制数进行与运算即可
+
+```cpp
+/* 
+ * logicalShift - shift x to the right by n, using a logical shift
+ *   Can assume that 0 <= n <= 31
+ *   Examples: logicalShift(0x87654321,4) = 0x08765432
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 20
+ *   Rating: 3 
+ */
+int logicalShift(int x, int n) {
+  int m = 32 + (~n)
+  return (x>>n)&((1<<m)+(~0)+(1<<m));
+}
+```
