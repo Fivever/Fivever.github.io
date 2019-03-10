@@ -166,6 +166,7 @@ int fitsBits(int x, int n) {
 
 这道题可以用移位解决，但对于符号数而言，正数除法是向下取整，负数除法是向上取整，而移位运算都是向下取整，所以对于正数可以直接移位，而对于负数则要给x添加偏移量以便向上舍入，也就是加上(1<<n)-1，用(x>>31)&1来判断是不是负数，并且如果是正数则没有偏移量
 
+```cpp
 /* 
  * divpwr2 - Compute x/(2^n), for 0 <= n <= 30
  *  Round toward zero
@@ -177,6 +178,7 @@ int fitsBits(int x, int n) {
 int divpwr2(int x, int n) {
     return (x+(((x>>31)&1)<<n)+(!((x>>31)&1)+(~0)))>>n;
 }
+```
 
 ## negate
 
