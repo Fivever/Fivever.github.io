@@ -11,9 +11,9 @@ comments: true
 ---
 ## Data Lab
 
-### 与运算
+### bitAnd
 
-用取反运算和或运算描述与运算
+问题：用取反运算和或运算描述与运算
 
 根据德摩根定律：
 
@@ -35,3 +35,18 @@ int bitAnd(int x, int y) {
 }
 ```
 
+### getByte
+
+```cpp
+/* 
+ * getByte - Extract byte n from word x
+ *   Bytes numbered from 0 (LSB) to 3 (MSB)
+ *   Examples: getByte(0x12345678,1) = 0x56
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 6
+ *   Rating: 2
+ */
+int getByte(int x, int n) {
+  return (x>>(n<<3))&0xff;
+}
+```
