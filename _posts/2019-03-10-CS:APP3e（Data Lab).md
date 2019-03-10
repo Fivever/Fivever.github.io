@@ -101,3 +101,22 @@ int bitCount(int x) {
   return ans;
 }
 ```
+
+
+### tmin
+
+问题：求32位补码的最小值
+
+32位补码的范围是-2^31~2^31-1，即最小值为符号位为1，其余均为0的二进制数
+
+```cpp
+/* 
+ * tmin - return minimum two's complement integer 
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 4
+ *   Rating: 1
+ */
+int tmin(void) {
+  return 1<<31;
+}
+```
