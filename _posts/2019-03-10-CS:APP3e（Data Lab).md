@@ -76,4 +76,28 @@ int logicalShift(int x, int n) {
 }
 ```
 
-### 
+### bitCount
+
+问题：求出二进制数中1的个数
+
+首先将二进数按位拆开，比如0101001101011001拆开得到0 1 0 1 0 0 1 1 0 1 0 1 1 0 0 1，将相邻数相加并以二进制数运算得到01 01 00 10 01 01 01 01，继续将相邻数相加得到0010 0010 0010 0010，继续上述操作得到0100 0100，继续得到1000，即有8个1。第一步通过0x55实现，即01010101，第二步用0x33，即00110011，第三步用0xf，即00001111。
+
+```cpp
+/*
+ * bitCount - returns count of number of 1's in word
+ *   Examples: bitCount(5) = 2, bitCount(7) = 3
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 40
+ *   Rating: 4
+ */
+int bitCount(int x) {
+  int n, ans = x;
+  n = 0x55 + (0x55 << 8) + (0x55 << 16) + (0x55 << 24);
+  ans = ans&n + (ans>>1)&n;
+  n = 0x33 + (0x33 << 8) + (0x33 << 16) + (0x33 << 24);
+  ans = ans&n + (ans>>1)&n;
+  n = 0xF + (0xF << 8) + (0xF << 16) + (0xF << 24);
+  ans = ans&n + (ans>>1)&n;
+  return ans;
+}
+```
