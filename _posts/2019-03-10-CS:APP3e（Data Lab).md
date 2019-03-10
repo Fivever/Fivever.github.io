@@ -138,3 +138,80 @@ int tmin(void) {
   return 1<<31;
 }
 ```
+
+### fitsBits
+
+问题：判断x是否能被n位补码表示
+
+首先分析，如果是正数，在n位范围内，从0（00...00)开始，1（00...01）到2^{n-1}（00...11），只有低n-1位里有1, 如果是负数，从0（00...00)开始，-1（11...11）到-2^{n-1}（11...000），只有低n-1位里有0，所以将x右移n-1位后应该全是0或者全是1，所以在右移n-1位后+1再右移1位就得到全0的二进制数
+
+```cpp
+/* 
+ * fitsBits - return 1 if x can be represented as an 
+ *  n-bit, two's complement integer.
+ *   1 <= n <= 32
+ *   Examples: fitsBits(5,3) = 0, fitsBits(-4,3) = 1
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 15
+ *   Rating: 2
+ */
+int fitsBits(int x, int n) {
+  return !(((x>>(n+(~0)))+1)>>1);
+}
+```
+
+### divpwr2
+
+问题：求x除以2^n
+
+这道题可以用移位解决，但对于符号数而言，正数除法是向下取整，负数除法是向上取整，而移位运算都是向下取整，所以对于正数可以直接移位，而对于负数则要给x添加偏移量以便向上舍入，也就是加上(1<<n)-1，用(x>>31)&1来判断是不是负数，并且如果是正数则没有偏移量
+
+/* 
+ * divpwr2 - Compute x/(2^n), for 0 <= n <= 30
+ *  Round toward zero
+ *   Examples: divpwr2(15,1) = 7, divpwr2(-33,4) = -2
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 15
+ *   Rating: 2
+ */
+int divpwr2(int x, int n) {
+    return (x+(((x>>31)&1)<<n)+(!((x>>31)&1)+(~0)))>>n;
+}
+
+### negate
+
+问题：求x的相反数
+
+对于补码而言，x的相反数就是x逐位取反再+1
+
+```cpp
+/* 
+ * negate - return -x 
+ *   Example: negate(1) = -1.
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 5
+ *   Rating: 2
+ */
+int negate(int x) {
+  return ~x+1;
+}
+```
+
+### isPosition
+
+问题：判断x是否是正数
+
+一个正数的符号位为0，并且0的最高位也为零，所以如果x是正数，x-1的的最高位必定为0
+
+```cpp
+/* 
+ * isPositive - return 1 if x > 0, return 0 otherwise 
+ *   Example: isPositive(-1) = 0.
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 8
+ *   Rating: 3
+ */
+int isPositive(int x) {
+  return !((x+(~0))>>31);
+}
+```
