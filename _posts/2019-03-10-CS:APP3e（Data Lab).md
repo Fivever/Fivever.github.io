@@ -71,7 +71,7 @@ int getByte(int x, int n) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  int m = 32 + (~n)
+  int m = 32 + (~n);
   return (x>>n)&((1<<m)+(~0)+(1<<m));
 }
 ```
@@ -93,11 +93,11 @@ int logicalShift(int x, int n) {
 int bitCount(int x) {
   int n, ans = x;
   n = 0x55 + (0x55 << 8) + (0x55 << 16) + (0x55 << 24);
-  ans = ans&n + (ans>>1)&n;
+  ans = (ans&n) + ((ans>>1)&n);
   n = 0x33 + (0x33 << 8) + (0x33 << 16) + (0x33 << 24);
-  ans = ans&n + (ans>>1)&n;
+  ans = (ans&n) + ((ans>>2)&n);
   n = 0xF + (0xF << 8) + (0xF << 16) + (0xF << 24);
-  ans = ans&n + (ans>>1)&n;
+  ans = (ans&n) + ((ans>>4)&n);
   return ans;
 }
 ```
