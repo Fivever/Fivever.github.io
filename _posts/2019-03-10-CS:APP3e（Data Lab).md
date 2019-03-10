@@ -9,9 +9,9 @@ toc: true
 share: true
 comments: true
 ---
-## Data Lab
+# Data Lab
 
-### bitAnd
+## bitAnd
 
 问题：用取反运算和或运算描述与运算
 
@@ -35,7 +35,7 @@ int bitAnd(int x, int y) {
 }
 ```
 
-### getByte
+## getByte
 
 问题：抽取x中第n个字节
 
@@ -55,7 +55,7 @@ int getByte(int x, int n) {
 }
 ```
 
-### logicalShift
+## logicalShift
 
 问题：将x逻辑右移n位
 
@@ -76,7 +76,7 @@ int logicalShift(int x, int n) {
 }
 ```
 
-### bitCount
+## bitCount
 
 问题：求出二进制数中1的个数
 
@@ -102,7 +102,7 @@ int bitCount(int x) {
 }
 ```
 
-### bang
+## bang
 
 问题：不用非运算符实现非运算符
 
@@ -121,7 +121,7 @@ int bang(int x) {
 }
 ```
 
-### tmin
+## tmin
 
 问题：求32位补码的最小值
 
@@ -139,7 +139,7 @@ int tmin(void) {
 }
 ```
 
-### fitsBits
+## fitsBits
 
 问题：判断x是否能被n位补码表示
 
@@ -160,7 +160,7 @@ int fitsBits(int x, int n) {
 }
 ```
 
-### divpwr2
+## divpwr2
 
 问题：求x除以2^n
 
@@ -178,7 +178,7 @@ int divpwr2(int x, int n) {
     return (x+(((x>>31)&1)<<n)+(!((x>>31)&1)+(~0)))>>n;
 }
 
-### negate
+## negate
 
 问题：求x的相反数
 
@@ -197,7 +197,7 @@ int negate(int x) {
 }
 ```
 
-### isPosition
+## isPosition
 
 问题：判断x是否是正数
 
