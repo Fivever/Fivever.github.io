@@ -98,7 +98,7 @@ int bitCount(int x) {
   ans = (ans&n) + ((ans>>2)&n);
   n = 0xF + (0xF << 8) + (0xF << 16) + (0xF << 24);
   ans = (ans&n) + ((ans>>4)&n);
-  return ans;
+  return (ans+(ans>>8)+(ans>>16)+(ans>>24))&0xff;
 }
 ```
 
@@ -203,7 +203,7 @@ int negate(int x) {
 
 问题：判断x是否是正数
 
-一个正数的符号位为0，并且0的最高位也为零，所以如果x是正数，x-1的的最高位必定为0
+一个正数的符号位为0，并且0的最高位也为零，所以如果x是正数，x-1的的最高位必定为0，但是因为-2^31-1溢出，即100...00-1得到的01...11，符号位变为0，所以还需先判断x的最高位为0，即x和x-1的最高位同时为0时，x才是正数
 
 ```cpp
 /* 
@@ -214,6 +214,142 @@ int negate(int x) {
  *   Rating: 3
  */
 int isPositive(int x) {
-  return !((x+(~0))>>31);
+  return !(((x>>31)&1)+(((x+(~0))>>31)&1));
+}
+```
+
+## isLessOrEqual
+
+问题：判断x<=y
+
+原本可以x-y之后判断符号位即可，但考虑到x、y符号不同的时候相减可能溢出，所以先判断符号，如果符号位不同则可以直接得出结论，如果符号位相同则计算x-y的值，因为可能x=y，所以计算x-y-1的值再判断符号位
+
+```cpp
+/* 
+ * isLessOrEqual - if x <= y  then return 1, else return 0 
+ *   Example: isLessOrEqual(4,5) = 1.
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 24
+ *   Rating: 3
+ */
+int isLessOrEqual(int x, int y) {
+  int tx = (x>>31)&1, ty = (y>>31)&1;
+  int ok1 = tx&(!ty), ok2 = (((x+(~y))>>31)&1)&(!(tx^ty));
+  return ok1|ok2;
+}
+```
+
+## ilog2
+
+问题：求出log2 x的值
+
+log2 x的值对于二进制而言就是求出x的最高位的1在哪一位，这里可以采取二分搜索计算，先计算前16位是否有1，如果前16位有1，则下一次计算就在16位的基础上向右移8位，计算前8位是否有1，否则计算前24位是否有1，以此类推
+```cpp
+/*
+ * ilog2 - return floor(log base 2 of x), where x > 0
+ *   Example: ilog2(16) = 4
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 90
+ *   Rating: 4
+ */
+int ilog2(int x) {
+  int ans = (!!(x>>16))<<4;
+  ans = ans + ((!!(x>>(8+ans)))<<3);
+  ans = ans + ((!!(x>>(4+ans)))<<2);
+  ans = ans + ((!!(x>>(2+ans)))<<1);
+  ans = ans + (!!(x>>(1+ans)));
+  return ans;
+}
+```
+
+## float_neg
+
+问题：求浮点数的相反数
+
+对于32位浮点数而言，最高位（即第31位）表示符号，第23到第30位表示阶码，第0到第22位表示尾数，所以求浮点数的相反数只需将浮点数的最高位取反即可，要注意的是，题目强调了如果浮点数为NAN，也就是阶码全为1，尾数不等于0的时候，需要返回原浮点数
+
+```cpp
+/* 
+ * float_neg - Return bit-level equivalent of expression -f for
+ *   floating point argument f.
+ *   Both the argument and result are passed as unsigned int's, but
+ *   they are to be interpreted as the bit-level representations of
+ *   single-precision floating point values.
+ *   When argument is NaN, return argument.
+ *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *   Max ops: 10
+ *   Rating: 2
+ */
+unsigned float_neg(unsigned uf) {
+  unsigned temp = uf&0x7fffffff;
+  unsigned ans = uf^0x80000000;
+  if(temp>0x7f800000) ans=uf;
+  return ans; 
+}
+```
+
+## float_i2f
+
+问题：将有符号数x转化为浮点数的表示形式，并返回无符号二进制数
+
+首先，如果x=0，则特殊处理直接返回0，如果x<0，则将x转换为-x，以便接下来统一对正数进行操作（要记录下符号位），对正数x而言，首先要找到x的最高位1在哪一位，以确定阶码和尾数，知道最高位1的位置后，也就确定了阶码，然后将x左移至只剩下尾数，因为32位浮点数的尾数存储只有23位，所以需要确定低9位的进位或舍入情况，所以取0x3ff和0x1ff，(tx&0x3ff)>=0x300说明第9位和要舍入的第8位均为1，此时因为使用的是偶数舍入法，偏向使最低有效位为0，所以需要进位，(tx&0x1ff)>0x100说明要舍入的第8位为1且低八位大于0，超过一半所以需要进位，最后将答案综合
+
+```cpp
+/* 
+ * float_i2f - Return bit-level equivalent of expression (float) x
+ *   Result is returned as unsigned int, but
+ *   it is to be interpreted as the bit-level representation of a
+ *   single-precision floating point values.
+ *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *   Max ops: 30
+ *   Rating: 4
+ */
+unsigned float_i2f(int x) {
+  unsigned ans;
+  unsigned sign = (x>>31)&1;
+  unsigned cnt = 0, temp = 0x80000000, c = 0, tx = x;
+  if(x==0) ans = 0;
+  else
+  {
+    if(sign) tx=(~x)+1;
+    while(!(temp&tx))
+    {
+      cnt++;
+      temp = temp>>1;
+    }
+    tx = tx<<(cnt+1);
+    if(((tx&0x3ff)>=0x300)||((tx&0x1ff)>0x100)) c=1;
+    ans = (sign<<31) + ((127+31-cnt)<<23) + (tx>>9) + c;
+  }
+  return ans;
+}
+```
+
+
+## float_twice
+
+问题：求浮点数乘以2
+
+对于非规格化浮点数，乘以2只需将浮点数左移一位并保持符号不变，对于规格化浮点数，只需在阶码+1，如果浮点数为NAN，则直接返回原浮点数
+
+```cpp
+/* 
+ * float_twice - Return bit-level equivalent of expression 2*f for
+ *   floating point argument f.
+ *   Both the argument and result are passed as unsigned int's, but
+ *   they are to be interpreted as the bit-level representation of
+ *   single-precision floating point values.
+ *   When argument is NaN, return argument
+ *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *   Max ops: 30
+ *   Rating: 4
+ */
+unsigned float_twice(unsigned uf) {
+  unsigned ans = uf;
+  if((ans&0x7f800000)==0)
+    ans = ((uf&0x007fffff)<<1)|(uf&0x80000000);
+  else if((ans&0x7f800000)!=0x7f800000)
+    ans = ans + 0x00800000;
+  return ans;
 }
 ```
