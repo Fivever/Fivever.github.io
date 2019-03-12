@@ -199,7 +199,7 @@ int negate(int x) {
 }
 ```
 
-## isPosition
+## isPositive
 
 问题：判断x是否是正数
 
