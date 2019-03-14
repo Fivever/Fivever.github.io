@@ -1,14 +1,14 @@
 ---
-published: true
 layout: post
-title: Ubuntu1604 Basic Configuration
-tags:
-  - Ubuntu
-description: 基于Ubuntu1604的基础开发配置
-toc: true
-share: true
-comments: true
+title: Ubuntu 16.04 基础配置
+date: 2019-01-11
+categories: Ubuntu
+tag: 配置
 ---
+
+* content
+{:toc}
+
 ### 更改系统软件下载源
 
 通过更改下载源，可以更快的进行系统软件以及补丁的更新
