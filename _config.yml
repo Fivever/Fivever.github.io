@@ -1,9 +1,9 @@
 # Site settings
 name: Fivever
 email: 1075263474@qq.com
-author: Freud Kang
+author: Jason Xiong
 url: http://www.fivever.github.io
-resume_site: http://www.hifreud.com/Resume.io/
+resume_site: 
 github: https://github.com/fivever/
 baseurl: 
 description: Actually, less is more!
@@ -21,6 +21,4 @@ github_username: Fivever
 
 # Build settings
 markdown: kramdown
-
-baidu_analysis: 94be4b0f9fc5d94cc0d0415ea6761ae9
 

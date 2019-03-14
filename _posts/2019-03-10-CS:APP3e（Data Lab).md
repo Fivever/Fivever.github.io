@@ -1,7 +1,6 @@
 ---
 layout: post
 title: CS:APP3e（Data Lab)
-author: Jason Xiong
 date: 2019-03-10
 categories: 计算机系统
 tag: 教程
