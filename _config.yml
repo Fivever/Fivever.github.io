@@ -21,15 +21,15 @@ kramdown:
   use_coderay: false
 
 JB :
-  IMAGE_PATH : 
+  IMAGE_PATH : http://coolshell.info/images
 
 # presonal config
-domain: http://fivever.github.io
+domain: http://coolshell.info
 title: Fivever
-description: 
-author: Jason Xiong
-email: 1075263474@qq.com
-github: Fivever
+description: Draw my life with code
+author: Lippi.OuYang
+email: ouyanglip@gmail.com
+github: LippiOuYang
 
 config:
   js_dir:
