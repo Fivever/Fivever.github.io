@@ -6,13 +6,13 @@ url: http://www.fivever.github.io
 resume_site: 
 github: https://github.com/fivever/
 baseurl: 
-description: Actually, less is more!
+description: Jason Xiong's Personal Blogs
 meta_description: 
 motto: 
 banner: 
 
-#permalink: /:categories/:year/:month/:day/:title/
-permalink: /:year/:month/:day/:title/
+permalink: /:categories/:title/:month/:day/:year/
+# permalink: /:year/:month/:day/:title/
 paginate: 10
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
