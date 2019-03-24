@@ -11,7 +11,7 @@ meta_description:
 motto: 
 banner: 
 
-permalink: /:categories/:title/:month/:day/:year/
+permalink: /:categories/:title/
 # permalink: /:year/:month/:day/:title/
 paginate: 10
 
