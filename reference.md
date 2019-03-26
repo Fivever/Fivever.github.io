@@ -16,3 +16,5 @@ permalink: /reference/
 [程序员面试、算法研究、机器学习集锦](https://blog.csdn.net/v_JULY_v/article/details/6543438)
 
 [Community detection经典论文](https://blog.csdn.net/cmonkey_cfj/article/details/19242725)
+
+[社团检测（community detection）相关文献整理（2015-2018）](https://blog.csdn.net/u012854831/article/details/78235019)
