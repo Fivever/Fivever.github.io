@@ -8,7 +8,7 @@ github: https://github.com/fivever/
 baseurl: 
 description: Jason Xiong's Personal Blogs
 meta_description: 
-motto: 极限尤可突破，至臻亦不可止
+motto: 极限尤可突破 至臻亦不可止
 banner: 思想 信任 自知
 
 permalink: /:categories/:title/
