@@ -6,6 +6,9 @@ categories: 计算机系统
 tag: 教程
 ---
 
+* content
+{:toc}
+
 ## bitAnd
 
 问题：用取反运算和或运算描述与运算

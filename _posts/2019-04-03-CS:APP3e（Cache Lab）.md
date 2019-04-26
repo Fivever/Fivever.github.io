@@ -6,6 +6,9 @@ categories: 计算机系统
 tag: 教程
 ---
 
+* content
+{:toc}
+
 ## Part A
 
 这一部分需要模拟缓存的运行。也就是要仿造出一个csim-ref的程序。
