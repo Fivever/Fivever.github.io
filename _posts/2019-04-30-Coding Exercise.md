@@ -180,3 +180,46 @@ int main()
     printf("%d\n",ans);
 }
 ```
+
+## [Adding Reversed Numbers](http://poj.org/problem?id=1504)
+
+将两个数反转相加再反转，思路简单。
+
+- 注意
+
+字符串在输入后的后一位自动变为'\0'。
+
+```cpp
+#include <cstdio>
+#include <cstring>
+
+const int N=100;
+char a[N],b[N];
+
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    while(n--)
+    {
+        memset(a,'0',sizeof(a));
+        memset(b,'0',sizeof(b));
+        scanf("%s %s",a,b);
+        for(int i=0;i<N;i++)
+        {
+            if(a[i+1]=='\0') a[i+1]='0';
+            if(b[i+1]=='\0') b[i+1]='0';
+            a[i]+=b[i]-'0';
+            while(a[i]>'9')
+                a[i]-=10, a[i+1]++;
+        }
+        int s=0,e=N-1;
+        while(a[s]=='0') s++;
+        while(a[e]=='0') e--;
+        for(int i=s;i<=e;i++)
+            printf("%c",a[i]);
+        printf("\n");
+    }
+}
+```
+
