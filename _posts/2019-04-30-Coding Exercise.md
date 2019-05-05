@@ -63,3 +63,120 @@ int main()
 
 ## [DNA Sorting](http://poj.org/problem?id=1007)
 
+- 注意
+  
+  因为algorithm里的sort被定义在std命名空间里，运用sort需要同时有algorithm和std。
+
+  struct中的对象存储为const DNA。所以当你试图用const对象调用<运算符时编译器会检测到一个问题，你主要是在const对象上调用一个非const成员函数，这是不允许的，因为非const成员函数不承诺不修改对象；所以编译器会做一个安全的假设该操作符可能会尝试修改对象，但同时，它也会注意到对象是const；因此，任何修改const对象的尝试都应该是错误的。因此编译器生成一个错误消息。
+
+
+```cpp
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+struct DNA
+{
+    char str[51];
+    int rank;
+    bool operator<(DNA x) const
+    {
+        return rank<=x.rank;
+    }
+}dna[100];
+
+int main()
+{
+    int len,n;
+    scanf("%d%d",&len,&n);
+    for(int i=0;i<n;i++)
+    {
+        scanf("%s",dna[i].str);
+        dna[i].rank=0;
+        for(int j=0;j<len;j++)
+            for(int k=j+1;k<len;k++)
+                dna[i].rank+=(dna[i].str[j]>dna[i].str[k]);
+    }
+    sort(dna,dna+n);
+    for(int i=0;i<n;i++)
+        printf("%s\n",dna[i].str);
+}
+```
+
+## [Vertical Histogram](http://poj.org/problem?id=2136)
+
+考察格式化输出。
+- 注意
+  memset在cstring头文件中。
+  
+  c字符串以'\0'结尾。
+```cpp
+#include <cstdio>
+
+const int N=26;
+int sum[N];
+char out[2*N];
+
+int main()
+{
+    char c;
+    for(int i=0;i<N;i++)
+        sum[i]=0;
+    while((c=getchar())!=-1)
+        if(c>='A'&&c<='Z')
+            sum[c-'A']++;
+    while(true)
+    {
+        int maxn=0;
+        for(int i=0;i<N;i++)
+            if(sum[i]>maxn)
+                maxn=sum[i];
+        if(!maxn) break;
+        for(int i=0;i<N;i++)
+        {
+            if(sum[i]==maxn)
+            {
+                out[2*i]='*';
+                sum[i]--;
+            }
+            else out[2*i]=' ';
+            out[2*i+1]=' ';
+        }
+        for(int i=2*N-1;i>0;i--)
+            if(out[i]=='*')
+            {
+                out[i+1]='\0';
+                break;
+            }
+        printf("%s\n",out);
+    }
+    for(int i=0;i<N-1;i++)
+        printf("%c ",'A'+i);
+    printf("Z\n");
+}
+```
+
+## [Herd Sums](http://poj.org/problem?id=2140)
+
+a+1+a+2+...+a+k=n\Rightarrow (k+1)a+0.5*k*(k＋1)=n\Rightarrow (a+0.5*k)(k+1)=n
+
+若k为奇数，k*x_{\frac{k+1}2}=n的整数解为答案的一部分。
+
+若k为偶数，(2*x_{\frac k2}+1)*\frac k2=n的整数解为答案的另一部分。
+
+因为k为奇数时，只需求符合条件的k，k为偶数时，只需求(2*x_{\frac k2}+1)，二者均为奇数，所以合起来就是n有多少个奇因数，就是本题的答案。
+
+
+```cpp
+#include <cstdio>
+
+int main()
+{
+    int n,ans=0;
+    scanf("%d",&n);
+    for(int i=1;i<=n;i+=2)
+        if(n%i==0)
+            ans++;
+    printf("%d\n",ans);
+}
+```
