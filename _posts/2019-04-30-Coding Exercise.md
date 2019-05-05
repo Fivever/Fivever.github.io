@@ -223,3 +223,61 @@ int main()
 }
 ```
 
+## [Manhattan 2025](http://poj.org/problem?id=1806)
+
+- 注意
+
+在用数组模拟队列的时候tail>front，不能相等
+
+```cpp
+#include <cstdio>
+#include <cstring>
+
+char c[19][19][19];
+int x[19*19*19],y[19*19*19],z[19*19*19];
+int dir[6][3]={0,0,1,0,1,0,1,0,0,0,0,-1,0,-1,0,-1,0,0};
+
+int main()
+{
+    int n,a;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    {
+        memset(c,'.',sizeof(c));
+        scanf("%d",&a);
+        if(a>9) continue;
+        int front=0,tail=0;
+        x[tail]=9,y[tail]=9,z[tail]=9;
+        tail++;
+        c[x[front]][y[front]][z[front]]='0';
+        while(tail>front)
+        {
+            char current=c[x[front]][y[front]][z[front]];
+            if(current<'0'+a)
+                for(int i=0;i<6;i++)
+                {
+                    char next=c[x[front]+dir[i][0]][y[front]+dir[i][1]][z[front]+dir[i][2]];
+                    if(next=='.')
+                    {
+                        c[x[front]+dir[i][0]][y[front]+dir[i][1]][z[front]+dir[i][2]]=current+1;
+                        x[tail]=x[front]+dir[i][0],y[tail]=y[front]+dir[i][1],z[tail]=z[front]+dir[i][2];
+                        tail++;
+                    }
+                }
+            front++;
+        }
+        printf("Scenario #%d:\n",i+1);
+        for(int i=9-a;i<=9+a;i++)
+        {
+            printf("slice #%d:\n",i-9+a+1);
+            for(int j=9-a;j<=9+a;j++)
+            {
+                for(int k=9-a;k<=9+a;k++)
+                    printf("%c",c[i][j][k]);
+                printf("\n");
+            }
+        }
+        printf("\n");
+    }
+}
+```
