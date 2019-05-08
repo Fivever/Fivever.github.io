@@ -1,6 +1,6 @@
 ---
 layout: post
-title: CS97SI
+title: Coding Exercise
 date: 2019-04-30
 categories: 算法训练
 tag: 教程
@@ -187,7 +187,7 @@ int main()
 
 - 注意
 
-字符串在输入后的后一位自动变为'\0'。
+  字符串在输入后的后一位自动变为'\0'。
 
 ```cpp
 #include <cstdio>
@@ -225,9 +225,11 @@ int main()
 
 ## [Manhattan 2025](http://poj.org/problem?id=1806)
 
+队列模拟迷宫BFS，不必考虑输出顺序，三维输出均是一样的结果。
+
 - 注意
 
-在用数组模拟队列的时候tail>front，不能相等
+  在用数组模拟队列的时候tail>front，不能相等。
 
 ```cpp
 #include <cstdio>
@@ -281,3 +283,5 @@ int main()
     }
 }
 ```
+
+## [Exponentiation](http://poj.org/problem?id=1001)
